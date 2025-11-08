@@ -43,5 +43,3 @@ jobs:
         #polaris_reports_sarif_issue_types: "SAST,SCA"
         #detect_args: "--detect.source.path: ${{ github.workspace }}/nodejs-npm"
         polaris_upload_sarif_report: true
-
-      
