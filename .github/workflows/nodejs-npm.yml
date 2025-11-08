@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main, master, develop, stage, release]
 
+permissions:
+  contents: read
+  security-events: write
+  
+  
 jobs:
   polaris-scan:
     runs-on: [ mac-arm-sh ]
