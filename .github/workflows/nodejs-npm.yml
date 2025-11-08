@@ -8,7 +8,7 @@ on:
 
 jobs:
   polaris-scan:
-    runs-on: [ ubuntu-latest ]
+    runs-on: [ mac-arm-sh ]
     
     defaults:
       run:
