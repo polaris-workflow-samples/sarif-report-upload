@@ -1,31 +1,46 @@
-name: Sarif Report Generation and Upload
+name: Polaris SAST and SCA Scan with Sarif Report
                                                                                                                                                                                                                                          
 on:
   push:
-    branches: [ main ]
+    branches: [main, master, develop, stage, release]
   pull_request:
-    branches: [ main ]
-                                                                                                                                                                                                                                         
+    branches: [main, master, develop, stage, release]
+
 jobs:
   polaris-scan:
-    runs-on: [mac-arm-sh]
-                                                                                                                                                                                                                                         
-    steps:
+    runs-on: [ ubuntu-latest ]
     
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/nodejs-npm
+
+    steps:
     - name: Checkout Source
       uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'  
+   
+    - name: Install dependencies
+      run: npm install  
+
+    - name: Build Project
+      run: |
+        npm rebuild
                                                                                                                                                                                                                                          
-    - name: Polaris Scan
+    - name: Polaris SAST and SCA Scan with Sarif Report
       uses: blackduck-inc/black-duck-security-scan@v2
       with:
-        polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
+        polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
         polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        polaris_assessment_types: "SAST"
+        polaris_assessment_types: "SAST,SCA"
         polaris_reports_sarif_create: true
         polaris_reports_sarif_severities: "CRITICAL,HIGH"
         polaris_reports_sarif_groupSCAIssues: false
         #polaris_reports_sarif_issue_types: "SAST,SCA"
-        #detect_args: "--detect.source.path: ${{ github.workspace }}/nodejs-npm"
+        detect_args: "--detect.source.path: ${{ github.workspace }}/nodejs-npm"
 
       
