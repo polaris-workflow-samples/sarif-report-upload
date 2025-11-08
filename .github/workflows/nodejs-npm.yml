@@ -36,11 +36,11 @@ jobs:
         polaris_server_url: ${{ secrets.POLARIS_SERVER_URL }}
         polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        polaris_assessment_types: "SAST,SCA"
+        polaris_assessment_types: "SCA"
         polaris_reports_sarif_create: true
         polaris_reports_sarif_severities: "CRITICAL,HIGH"
         polaris_reports_sarif_groupSCAIssues: false
         #polaris_reports_sarif_issue_types: "SAST,SCA"
-        #detect_args: "--detect.source.path: ${{ github.workspace }}/nodejs-npm"
+        detect_args: "--detect.source.path: ${{ github.workspace }}/nodejs-npm"
 
       
